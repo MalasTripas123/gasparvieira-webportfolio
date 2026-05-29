@@ -210,14 +210,13 @@ export default function App() {
     const handleScroll = () => {
       let current = "about";
       const header = document.querySelector("header");
-      const headerHeight = header?.offsetHeight ?? 0;
+      const headerBottom = header?.getBoundingClientRect().bottom ?? 0;
       const isDesktopLayout = window.matchMedia("(min-width: 700px)").matches;
-      const scrollPosition =
-        window.scrollY + headerHeight + (isDesktopLayout ? 160 : 24);
+      const activationLine = headerBottom + (isDesktopLayout ? 160 : 56);
 
       for (const section of sectionKeys) {
         const element = document.getElementById(section);
-        if (element && scrollPosition >= element.offsetTop) {
+        if (element && element.getBoundingClientRect().top <= activationLine) {
           current = section;
         }
       }
@@ -248,6 +247,7 @@ export default function App() {
       const offsetPosition =
         elementPosition + window.pageYOffset - headerOffset;
 
+      setActiveSection(id);
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
