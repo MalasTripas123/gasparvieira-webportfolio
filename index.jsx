@@ -56,7 +56,7 @@ const stackData = [
   {
     id: "frontend",
     icon: <LayoutTemplate className="w-5 h-5" />,
-    items: ["JavaScript", "React", "HTML", "CSS", "Tailwind CSS", "Bulma CSS"],
+    items: ["JavaScript", "React", "HTML", "CSS", "Tailwind CSS", "Bulma CSS", "Electron"],
   },
   {
     id: "backend",
@@ -71,7 +71,7 @@ const stackData = [
   {
     id: "tools",
     icon: <Wrench className="w-5 h-5" />,
-    items: ["VS Code", "Visual Studio", "Unity", "Windows Forms"],
+    items: ["VS Code", "Visual Studio", "Unity", "Windows Forms", "Git"],
   },
 ];
 
