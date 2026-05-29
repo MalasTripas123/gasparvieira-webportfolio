@@ -75,6 +75,29 @@ const stackData = [
   },
 ];
 
+const techIconClasses = {
+  JavaScript: "devicon-javascript-plain colored",
+  React: "devicon-react-original colored",
+  HTML: "devicon-html5-plain colored",
+  CSS: "devicon-css3-plain colored",
+  "Tailwind CSS": "devicon-tailwindcss-original colored",
+  "Bulma CSS": "devicon-bulma-plain colored",
+  Electron: "devicon-electron-original colored",
+  "Node.js": "devicon-nodejs-plain colored",
+  PHP: "devicon-php-plain colored",
+  Python: "devicon-python-plain colored",
+  "C#": "devicon-csharp-plain colored",
+  MongoDB: "devicon-mongodb-plain colored",
+  MySQL: "devicon-mysql-original colored",
+  "SQL Server": "devicon-microsoftsqlserver-plain colored",
+  SQLite: "devicon-sqlite-plain colored",
+  "VS Code": "devicon-vscode-plain colored",
+  "Visual Studio": "devicon-visualstudio-plain colored",
+  Unity: "devicon-unity-plain text-white",
+  "Windows Forms": "devicon-windows8-original colored",
+  Git: "devicon-git-plain colored",
+};
+
 const projectsData = [
   {
     id: 1,
@@ -187,7 +210,10 @@ export default function App() {
     const handleScroll = () => {
       let current = "about";
       const header = document.querySelector("header");
-      const scrollPosition = window.scrollY + (header?.offsetHeight ?? 0) + 160;
+      const headerHeight = header?.offsetHeight ?? 0;
+      const isDesktopLayout = window.matchMedia("(min-width: 700px)").matches;
+      const scrollPosition =
+        window.scrollY + headerHeight + (isDesktopLayout ? 160 : 24);
 
       for (const section of sectionKeys) {
         const element = document.getElementById(section);
@@ -210,7 +236,7 @@ export default function App() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [sectionKeys]);
+  }, []);
 
   // Función para hacer scroll suave a la sección
   const scrollToSection = (id) => {
@@ -400,9 +426,13 @@ export default function App() {
                             className="group/tech min-h-24 rounded-2xl border border-neutral-700/50 bg-black/85 px-3 py-3 text-center text-sm font-medium text-neutral-300 transition-colors hover:border-[#9D9DCC]/70 hover:text-[#9D9DCC] hover:bg-[#9D9DCC]/5"
                           >
                             <div
-                              className="mx-auto mb-3 h-9 w-9 rounded-lg border border-neutral-700 bg-neutral-900/90 transition-colors group-hover/tech:border-[#9D9DCC]/60"
+                              className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900/90 transition-colors group-hover/tech:border-[#9D9DCC]/60"
                               aria-hidden="true"
-                            ></div>
+                            >
+                              <i
+                                className={`${techIconClasses[item] ?? "devicon-devicon-plain colored"} text-2xl leading-none`}
+                              ></i>
+                            </div>
                             <span>{item}</span>
                           </div>
                         ))}
