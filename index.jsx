@@ -11,7 +11,9 @@ import {
   Wrench,
   Globe,
   Home,
+  Moon,
   Sparkles,
+  Sun,
   LayoutTemplate,
   Server,
 } from "lucide-react";
@@ -175,7 +177,10 @@ function ParticlesBackground() {
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(245, 245, 245, ${particle.opacity})`;
+        const isLightTheme = document.documentElement.dataset.theme === "light";
+        ctx.fillStyle = isLightTheme
+          ? `rgba(83, 82, 116, ${particle.opacity * 0.75})`
+          : `rgba(245, 245, 245, ${particle.opacity})`;
         ctx.fill();
       });
 
@@ -203,8 +208,28 @@ function ParticlesBackground() {
 
 export default function App() {
   const [lang, setLang] = useState("es");
+  const [theme, setTheme] = useState(() => {
+    try {
+      return window.localStorage.getItem("portfolio-theme") === "light"
+        ? "light"
+        : "dark";
+    } catch {
+      return "dark";
+    }
+  });
   const [activeSection, setActiveSection] = useState("about");
   const t = dict[lang];
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+
+    try {
+      window.localStorage.setItem("portfolio-theme", theme);
+    } catch {
+      // Ignore storage errors in restricted browser contexts.
+    }
+  }, [theme]);
 
   // Manejar el scroll para actualizar el menú activo
   useEffect(() => {
@@ -264,6 +289,10 @@ export default function App() {
     });
   };
 
+  const toggleTheme = () => {
+    setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
+  };
+
   const openMailClient = () => {
     const protocol = [109, 97, 105, 108, 116, 111, 58]
       .map((code) => String.fromCharCode(code))
@@ -279,7 +308,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative isolate min-h-screen bg-[#050505] text-neutral-300 font-sans selection:bg-neutral-200 selection:text-black">
+    <div className="portfolio-root relative isolate min-h-screen bg-[#050505] text-neutral-300 font-sans selection:bg-neutral-200 selection:text-black">
       <ParticlesBackground />
       <div className="portfolio-shell relative z-10 flex min-h-screen flex-col lg:flex-row max-w-[1800px] mx-auto">
         {/* TARJETA IZQUIERDA (Fija en Desktop) */}
@@ -382,13 +411,30 @@ export default function App() {
               ))}
             </nav>
 
-            <div className="flex w-full justify-center min-[700px]:w-auto min-[700px]:justify-end">
+            <div className="flex w-full justify-center gap-2 min-[700px]:w-auto min-[700px]:justify-end">
               <button
                 onClick={() => setLang(lang === "es" ? "en" : "es")}
                 className="px-4 py-2.5 rounded-full bg-neutral-800/40 hover:bg-[#9D9DCC]/15 border border-neutral-700/50 hover:border-[#9D9DCC]/70 text-xs font-bold text-white hover:text-[#9D9DCC] transition-colors flex items-center justify-center gap-2"
               >
                 <Globe className="w-4 h-4" />
                 {lang.toUpperCase()}
+              </button>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-700/50 bg-neutral-800/40 text-white transition-colors hover:border-[#9D9DCC]/70 hover:bg-[#9D9DCC]/15 hover:text-[#9D9DCC]"
+                aria-label={
+                  theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"
+                }
+                title={
+                  theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"
+                }
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
               </button>
             </div>
           </header>

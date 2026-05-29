@@ -15,6 +15,14 @@ body {
   overflow-x: clip;
 }
 
+html[data-theme="light"] {
+  scrollbar-color: rgba(157, 157, 204, 0.9) rgba(240, 238, 247, 0.95);
+}
+
+html[data-theme="light"] body {
+  background: #f6f4fb;
+}
+
 html::-webkit-scrollbar {
   width: 12px;
 }
@@ -40,6 +48,15 @@ html::-webkit-scrollbar-thumb:hover {
   box-shadow: 0 0 22px rgba(157, 157, 204, 0.34);
 }
 
+html[data-theme="light"]::-webkit-scrollbar-track {
+  background: rgba(240, 238, 247, 0.95);
+  border-left-color: rgba(42, 39, 58, 0.08);
+}
+
+html[data-theme="light"]::-webkit-scrollbar-thumb {
+  border-color: #f6f4fb;
+}
+
 .section-rail {
   display: none;
 }
@@ -48,6 +65,85 @@ html::-webkit-scrollbar-thumb:hover {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+}
+
+html[data-theme="light"] .portfolio-root {
+  background: #f6f4fb;
+  color: #302e43;
+}
+
+html[data-theme="light"] .portfolio-header {
+  background: rgba(246, 244, 251, 0.86);
+  border-color: rgba(42, 39, 58, 0.1);
+}
+
+html[data-theme="light"] .profile-sidebar > div,
+html[data-theme="light"] .stack-category,
+html[data-theme="light"] #projects .space-y-8 > div {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(157, 157, 204, 0.3);
+  box-shadow: 0 24px 70px rgba(42, 39, 58, 0.08);
+}
+
+html[data-theme="light"] .profile-photo-frame,
+html[data-theme="light"] #projects .aspect-video {
+  background: linear-gradient(to bottom, #e9e6f4, #faf9fd);
+  border-color: rgba(157, 157, 204, 0.28);
+}
+
+html[data-theme="light"] #projects .aspect-video > div {
+  background: linear-gradient(to top right, #e8e5f2, #f9f8fd);
+}
+
+html[data-theme="light"] .portfolio-root .text-white {
+  color: #1f1d2e;
+}
+
+html[data-theme="light"] .portfolio-root .text-neutral-200,
+html[data-theme="light"] .portfolio-root .text-neutral-300,
+html[data-theme="light"] .portfolio-root .text-neutral-400,
+html[data-theme="light"] .portfolio-root .text-neutral-500 {
+  color: #5f5c72;
+}
+
+html[data-theme="light"] .portfolio-root [class*="bg-neutral-800"] {
+  background-color: rgba(235, 232, 244, 0.9);
+}
+
+html[data-theme="light"] .portfolio-root [class*="bg-neutral-900"] {
+  background-color: rgba(247, 245, 252, 0.94);
+}
+
+html[data-theme="light"] .portfolio-root [class*="bg-black"] {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+html[data-theme="light"] .portfolio-root [class*="border-neutral-"] {
+  border-color: rgba(157, 157, 204, 0.28);
+}
+
+html[data-theme="light"] .tech-card {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+html[data-theme="light"] .tech-icon-frame {
+  background: rgba(247, 245, 252, 0.96);
+}
+
+html[data-theme="light"] .section-rail__item {
+  color: rgba(48, 46, 67, 0.62);
+}
+
+html[data-theme="light"] .section-rail__star {
+  color: rgba(48, 46, 67, 0.45);
+}
+
+html[data-theme="light"] .portfolio-main::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(246, 244, 251, 0),
+    rgba(246, 244, 251, 0.96)
+  );
 }
 
 .stack-category {
