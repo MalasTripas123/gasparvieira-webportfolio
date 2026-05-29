@@ -50,6 +50,110 @@ html::-webkit-scrollbar-thumb:hover {
   top: 0;
 }
 
+.stack-category {
+  container-type: inline-size;
+}
+
+.stack-category-title {
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+
+.tech-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.25rem), 1fr));
+}
+
+.tech-grid--featured {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.25rem), 1fr));
+}
+
+.tech-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 6rem;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0.75rem;
+}
+
+.tech-icon-frame {
+  height: 2.5rem;
+  margin-bottom: 0.75rem;
+  min-height: 0;
+  min-width: 0;
+  width: 2.5rem;
+}
+
+.tech-icon {
+  font-size: 1.5rem;
+}
+
+.tech-name {
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.15;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+@container (max-width: 17rem) {
+  .stack-category {
+    padding: 1.35rem;
+  }
+
+  .stack-category-title {
+    font-size: 1.1rem;
+  }
+
+  .tech-grid {
+    gap: 0.65rem;
+  }
+
+  .tech-card {
+    min-height: 5.5rem;
+    padding: 0.65rem 0.5rem;
+  }
+
+  .tech-icon-frame {
+    height: 2.25rem;
+    margin-bottom: 0.55rem;
+    width: 2.25rem;
+  }
+
+  .tech-icon {
+    font-size: 1.35rem;
+  }
+
+  .tech-name {
+    font-size: 0.74rem;
+  }
+}
+
+@container (max-width: 13rem) {
+  .stack-category {
+    padding: 1rem;
+  }
+
+  .stack-category-title {
+    font-size: 1rem;
+  }
+
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-card {
+    min-height: 5rem;
+  }
+
+  .tech-name {
+    font-size: 0.68rem;
+  }
+}
+
 @media (min-width: 700px) {
   .portfolio-shell {
     --sidebar-width: clamp(320px, 42vw, 420px);

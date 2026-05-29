@@ -10,6 +10,7 @@ import {
   Database,
   Wrench,
   Globe,
+  Home,
   Sparkles,
   LayoutTemplate,
   Server,
@@ -255,6 +256,14 @@ export default function App() {
     }
   };
 
+  const scrollToTop = () => {
+    setActiveSection("about");
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const openMailClient = () => {
     const protocol = [109, 97, 105, 108, 116, 111, 58]
       .map((code) => String.fromCharCode(code))
@@ -350,6 +359,14 @@ export default function App() {
           {/* Header Fijo */}
           <header className="portfolio-header sticky top-0 z-50 backdrop-blur-xl bg-[#050505]/80 border-b border-neutral-800 px-4 sm:px-6 lg:px-12 py-4 lg:py-5 flex flex-col min-[700px]:flex-row justify-between items-stretch min-[700px]:items-center gap-3 transition-all">
             <nav className="flex w-full min-[700px]:w-auto justify-center min-[700px]:justify-start gap-2 lg:gap-4 overflow-x-auto no-scrollbar">
+              <button
+                type="button"
+                onClick={scrollToTop}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-800 bg-transparent text-neutral-400 transition-all hover:border-[#9D9DCC]/70 hover:bg-[#9D9DCC]/15 hover:text-[#9D9DCC] min-[700px]:hidden"
+                aria-label="Volver al inicio"
+              >
+                <Home className="h-4 w-4" />
+              </button>
               {sectionKeys.map((key) => (
                 <button
                   key={key}
@@ -403,37 +420,37 @@ export default function App() {
                   return (
                     <div
                       key={category.id}
-                      className={`group rounded-[2rem] border transition-colors ${
+                      className={`stack-category group min-w-0 rounded-[2rem] border transition-colors ${
                         isFeatured
                           ? "md:col-span-2 bg-[#151515]/95 border-[#9D9DCC]/55 p-7 lg:p-9 shadow-[0_0_40px_rgba(157,157,204,0.1)] hover:border-[#9D9DCC]"
                           : "bg-[#111111]/95 border-neutral-800/80 p-7 lg:p-8 hover:bg-neutral-900 hover:border-[#9D9DCC]/70"
                       }`}
                     >
-                      <div className="flex items-center gap-4 mb-7">
-                        <div className="p-3 bg-neutral-800 rounded-xl text-white group-hover:text-[#9D9DCC] group-hover:scale-110 transition-all">
+                      <div className="flex min-w-0 items-center gap-4 mb-7">
+                        <div className="shrink-0 p-3 bg-neutral-800 rounded-xl text-white group-hover:text-[#9D9DCC] group-hover:scale-110 transition-all">
                           {category.icon}
                         </div>
-                        <h4 className="text-xl font-bold text-white tracking-wide">
+                        <h4 className="stack-category-title min-w-0 text-xl font-bold text-white tracking-wide">
                           {t[category.id]}
                         </h4>
                       </div>
                       <div
-                        className={`grid gap-3 ${isFeatured ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2"}`}
+                        className={`tech-grid grid gap-3 ${isFeatured ? "tech-grid--featured" : ""}`}
                       >
                         {category.items.map((item) => (
                           <div
                             key={item}
-                            className="group/tech min-h-24 rounded-2xl border border-neutral-700/50 bg-black/85 px-3 py-3 text-center text-sm font-medium text-neutral-300 transition-colors hover:border-[#9D9DCC]/70 hover:text-[#9D9DCC] hover:bg-[#9D9DCC]/5"
+                            className="tech-card group/tech rounded-2xl border border-neutral-700/50 bg-black/85 text-center font-medium text-neutral-300 transition-colors hover:border-[#9D9DCC]/70 hover:text-[#9D9DCC] hover:bg-[#9D9DCC]/5"
                           >
                             <div
-                              className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900/90 transition-colors group-hover/tech:border-[#9D9DCC]/60"
+                              className="tech-icon-frame mx-auto flex items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900/90 transition-colors group-hover/tech:border-[#9D9DCC]/60"
                               aria-hidden="true"
                             >
                               <i
-                                className={`${techIconClasses[item] ?? "devicon-devicon-plain colored"} text-2xl leading-none`}
+                                className={`tech-icon ${techIconClasses[item] ?? "devicon-devicon-plain colored"} leading-none`}
                               ></i>
                             </div>
-                            <span>{item}</span>
+                            <span className="tech-name">{item}</span>
                           </div>
                         ))}
                       </div>
