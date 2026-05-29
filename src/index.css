@@ -6,11 +6,13 @@ html {
   scroll-behavior: smooth;
   scrollbar-color: rgba(157, 157, 204, 0.8) rgba(5, 5, 5, 0.9);
   scrollbar-width: thin;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   background: #050505;
+  overflow-x: clip;
 }
 
 html::-webkit-scrollbar {
@@ -40,6 +42,12 @@ html::-webkit-scrollbar-thumb:hover {
 
 .section-rail {
   display: none;
+}
+
+.portfolio-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 @media (min-width: 700px) {

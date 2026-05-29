@@ -216,7 +216,8 @@ export default function App() {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerOffset = 100;
+      const header = document.querySelector("header");
+      const headerOffset = (header?.offsetHeight ?? 100) + 24;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition =
         elementPosition + window.pageYOffset - headerOffset;
@@ -243,12 +244,12 @@ export default function App() {
   };
 
   return (
-    <div className="relative isolate min-h-screen overflow-x-hidden bg-[#050505] text-neutral-300 font-sans selection:bg-neutral-200 selection:text-black">
+    <div className="relative isolate min-h-screen bg-[#050505] text-neutral-300 font-sans selection:bg-neutral-200 selection:text-black">
       <ParticlesBackground />
       <div className="portfolio-shell relative z-10 flex min-h-screen flex-col lg:flex-row max-w-[1800px] mx-auto">
         {/* TARJETA IZQUIERDA (Fija en Desktop) */}
-        <aside className="profile-sidebar p-4 flex-shrink-0 z-20">
-          <div className="h-full bg-[#111111]/95 rounded-[2rem] border border-neutral-800 p-5 lg:p-6 xl:p-7 flex flex-col shadow-2xl backdrop-blur-sm">
+        <aside className="profile-sidebar w-full max-w-full p-4 flex-shrink-0 z-20">
+          <div className="h-full w-full max-w-full overflow-hidden bg-[#111111]/95 rounded-[2rem] border border-neutral-800 p-5 lg:p-6 xl:p-7 flex flex-col shadow-2xl backdrop-blur-sm">
             {/* Espacio para Foto */}
             <div className="profile-photo-frame w-full aspect-[16/10] lg:aspect-auto lg:h-[38%] lg:min-h-[220px] shrink-0 bg-gradient-to-b from-neutral-900 to-[#111111] rounded-2xl mb-5 lg:mb-6 relative overflow-hidden flex flex-col items-center justify-center border border-neutral-700/50">
               <img
@@ -259,8 +260,8 @@ export default function App() {
             </div>
 
             {/* Información Personal */}
-            <div className="flex-1 flex flex-col">
-              <h1 className="text-3xl xl:text-4xl font-bold text-white mb-1 tracking-tight">
+            <div className="min-w-0 flex-1 flex flex-col">
+              <h1 className="max-w-full text-3xl xl:text-4xl font-bold text-white mb-1 tracking-tight break-words leading-tight">
                 Gaspar <span className="text-[#9D9DCC]">Vieira Bert</span>
               </h1>
               <h2 className="text-base xl:text-lg text-neutral-400 font-medium mb-6">
@@ -268,22 +269,22 @@ export default function App() {
               </h2>
 
               <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-3 text-neutral-300">
+                <div className="flex min-w-0 items-center gap-3 text-neutral-300">
                   <div className="p-2 bg-neutral-800/50 rounded-lg">
                     <MapPin className="w-4 h-4 text-neutral-200" />
                   </div>
-                  <span className="text-sm font-medium">{t.location}</span>
+                  <span className="min-w-0 text-sm font-medium break-words">{t.location}</span>
                 </div>
                 <button
                   type="button"
                   onClick={openMailClient}
-                  className="group flex w-fit items-center gap-3 text-neutral-300 transition-colors"
+                  className="group flex max-w-full items-center gap-3 text-neutral-300 transition-colors"
                   aria-label="Enviar correo"
                 >
                   <span className="p-2 bg-neutral-800/50 rounded-lg group-hover:bg-[#9D9DCC]/15 transition-colors">
                     <Mail className="w-4 h-4 text-neutral-200" />
                   </span>
-                  <span className="text-sm font-medium text-neutral-400 group-hover:text-[#9D9DCC] transition-colors">
+                  <span className="min-w-0 text-sm font-medium text-neutral-400 group-hover:text-[#9D9DCC] transition-colors break-words">
                     Enviar correo
                   </span>
                 </button>
@@ -321,13 +322,13 @@ export default function App() {
         {/* SECCIÓN DERECHA (Con Scroll) */}
         <main className="portfolio-main flex-1 min-w-0 relative">
           {/* Header Fijo */}
-          <header className="portfolio-header sticky top-0 z-50 backdrop-blur-xl bg-[#050505]/80 border-b border-neutral-800 px-6 lg:px-12 py-5 flex justify-between items-center transition-all">
-            <nav className="flex gap-2 lg:gap-4 overflow-x-auto no-scrollbar">
+          <header className="portfolio-header sticky top-0 z-50 backdrop-blur-xl bg-[#050505]/80 border-b border-neutral-800 px-4 sm:px-6 lg:px-12 py-4 lg:py-5 flex flex-col min-[700px]:flex-row justify-between items-stretch min-[700px]:items-center gap-3 transition-all">
+            <nav className="flex w-full min-[700px]:w-auto justify-center min-[700px]:justify-start gap-2 lg:gap-4 overflow-x-auto no-scrollbar">
               {sectionKeys.map((key) => (
                 <button
                   key={key}
                   onClick={() => scrollToSection(key)}
-                  className={`px-5 py-2.5 rounded-full text-xs lg:text-sm font-bold tracking-widest transition-all whitespace-nowrap border ${
+                  className={`px-3.5 sm:px-5 py-2.5 rounded-full text-[0.68rem] sm:text-xs lg:text-sm font-bold tracking-wider sm:tracking-widest transition-all whitespace-nowrap border ${
                     activeSection === key
                       ? "bg-[#9D9DCC] text-black border-[#9D9DCC] shadow-[0_0_18px_rgba(157,157,204,0.2)]"
                       : "bg-transparent text-neutral-400 border-neutral-800 hover:text-[#9D9DCC] hover:border-[#9D9DCC]/70"
@@ -338,13 +339,15 @@ export default function App() {
               ))}
             </nav>
 
-            <button
-              onClick={() => setLang(lang === "es" ? "en" : "es")}
-              className="ml-4 px-4 py-2.5 rounded-full bg-neutral-800/40 hover:bg-[#9D9DCC]/15 border border-neutral-700/50 hover:border-[#9D9DCC]/70 text-xs font-bold text-white hover:text-[#9D9DCC] transition-colors flex items-center gap-2"
-            >
-              <Globe className="w-4 h-4" />
-              {lang.toUpperCase()}
-            </button>
+            <div className="flex w-full justify-center min-[700px]:w-auto min-[700px]:justify-end">
+              <button
+                onClick={() => setLang(lang === "es" ? "en" : "es")}
+                className="px-4 py-2.5 rounded-full bg-neutral-800/40 hover:bg-[#9D9DCC]/15 border border-neutral-700/50 hover:border-[#9D9DCC]/70 text-xs font-bold text-white hover:text-[#9D9DCC] transition-colors flex items-center justify-center gap-2"
+              >
+                <Globe className="w-4 h-4" />
+                {lang.toUpperCase()}
+              </button>
+            </div>
           </header>
 
           {/* Cuerpos de Contenido */}
