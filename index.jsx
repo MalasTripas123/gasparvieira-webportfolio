@@ -5,6 +5,7 @@ import {
   Download,
   MapPin,
   Mail,
+  MessageSquare,
   ChevronRight,
   Code2,
   Database,
@@ -14,6 +15,8 @@ import {
   Moon,
   Sparkles,
   Sun,
+  Send,
+  X,
   LayoutTemplate,
   Server,
 } from "lucide-react";
@@ -35,6 +38,22 @@ const dict = {
     projectsTitle: "Proyectos",
     viewCode: "Ver Código",
     photoPlaceholder: "ESPACIO PARA FOTO",
+    contact: {
+      button: "Contáctame",
+      title: "Contáctame",
+      name: "Nombre",
+      email: "Correo",
+      message: "Mensaje",
+      send: "Enviar",
+      sending: "Enviando...",
+      sent: "Mensaje enviado. Gracias por escribir.",
+      successTitle: "Mensaje enviado",
+      successText:
+        "Gracias por escribirme. Te responderé apenas pueda revisar tu mensaje.",
+      successClose: "Perfecto",
+      error: "No pude enviar el mensaje. Intenta nuevamente en un momento.",
+      cancel: "Cancelar",
+    },
   },
   en: {
     nav: { about: "ABOUT ME", stack: "STACK", projects: "PROJECTS" },
@@ -52,14 +71,60 @@ const dict = {
     projectsTitle: "Projects",
     viewCode: "View Code",
     photoPlaceholder: "PHOTO SPACE",
+    contact: {
+      button: "Contact me",
+      title: "Contact me",
+      name: "Name",
+      email: "Email",
+      message: "Message",
+      send: "Send",
+      sending: "Sending...",
+      sent: "Message sent. Thanks for reaching out.",
+      successTitle: "Message sent",
+      successText:
+        "Thanks for reaching out. I will reply as soon as I can review your message.",
+      successClose: "Great",
+      error: "I couldn't send the message. Please try again in a moment.",
+      cancel: "Cancel",
+    },
   },
+};
+
+const mailtoProtocolCodes = [109, 97, 105, 108, 116, 111, 58];
+const contactEmailCodes = [
+  103, 46, 118, 105, 101, 105, 114, 97, 98, 101, 114, 116, 64, 103, 109, 97,
+  105, 108, 46, 99, 111, 109,
+];
+
+const decodeCharCodes = (codes) =>
+  codes.map((code) => String.fromCharCode(code)).join("");
+
+const getMailClientUrl = ({ subject, body } = {}) => {
+  const query = [
+    subject ? `subject=${encodeURIComponent(subject)}` : "",
+    body ? `body=${encodeURIComponent(body)}` : "",
+  ]
+    .filter(Boolean)
+    .join("&");
+
+  return `${decodeCharCodes(mailtoProtocolCodes)}${decodeCharCodes(
+    contactEmailCodes,
+  )}${query ? `?${query}` : ""}`;
 };
 
 const stackData = [
   {
     id: "frontend",
     icon: <LayoutTemplate className="w-5 h-5" />,
-    items: ["JavaScript", "React", "HTML", "CSS", "Tailwind CSS", "Bulma CSS", "Electron"],
+    items: [
+      "JavaScript",
+      "React",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "Bulma CSS",
+      "Electron",
+    ],
   },
   {
     id: "backend",
@@ -153,9 +218,10 @@ function ParticlesBackground() {
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+      const baseParticleCount = Math.floor((width * height) / 13000);
       const particleCount = Math.min(
-        120,
-        Math.max(55, Math.floor((width * height) / 13000)),
+        156,
+        Math.max(72, Math.floor(baseParticleCount * 1.3)),
       );
       particles = Array.from({ length: particleCount }, () =>
         createParticle(width, height),
@@ -179,7 +245,7 @@ function ParticlesBackground() {
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
         const isLightTheme = document.documentElement.dataset.theme === "light";
         ctx.fillStyle = isLightTheme
-          ? `rgba(83, 82, 116, ${particle.opacity * 0.75})`
+          ? `rgba(42, 39, 68, ${particle.opacity * 0.95})`
           : `rgba(245, 245, 245, ${particle.opacity})`;
         ctx.fill();
       });
@@ -218,6 +284,16 @@ export default function App() {
     }
   });
   const [activeSection, setActiveSection] = useState("about");
+  const [isProfileFlipped, setIsProfileFlipped] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [showContactSuccess, setShowContactSuccess] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [contactStatus, setContactStatus] = useState("idle");
+  const [contactError, setContactError] = useState("");
   const t = dict[lang];
 
   useEffect(() => {
@@ -230,6 +306,20 @@ export default function App() {
       // Ignore storage errors in restricted browser contexts.
     }
   }, [theme]);
+
+  useEffect(() => {
+    if (!isContactOpen && !showContactSuccess) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsContactOpen(false);
+        setShowContactSuccess(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isContactOpen, showContactSuccess]);
 
   // Manejar el scroll para actualizar el menú activo
   useEffect(() => {
@@ -294,17 +384,68 @@ export default function App() {
   };
 
   const openMailClient = () => {
-    const protocol = [109, 97, 105, 108, 116, 111, 58]
-      .map((code) => String.fromCharCode(code))
-      .join("");
-    const email = [
-      103, 46, 118, 105, 101, 105, 114, 97, 98, 101, 114, 116, 64, 103,
-      109, 97, 105, 108, 46, 99, 111, 109,
-    ]
-      .map((code) => String.fromCharCode(code))
-      .join("");
+    // window.location.href = getMailClientUrl();
+    window.open(getMailClientUrl(), "_blank", "noopener,noreferrer");
+  };
 
-    window.location.href = `${protocol}${email}`;
+  const updateContactField = (event) => {
+    const { name, value } = event.target;
+    setContactStatus("idle");
+    setContactError("");
+    setContactForm((currentForm) => ({
+      ...currentForm,
+      [name]: value,
+    }));
+  };
+
+  const closeContactModal = () => {
+    setIsContactOpen(false);
+  };
+
+  const closeContactSuccess = () => {
+    setShowContactSuccess(false);
+  };
+
+  const openContactModal = () => {
+    setShowContactSuccess(false);
+    setContactStatus("idle");
+    setContactError("");
+    setIsContactOpen(true);
+  };
+
+  const sendContactMessage = async (event) => {
+    event.preventDefault();
+
+    setContactStatus("sending");
+    setContactError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(contactForm),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.message || t.contact.error);
+      }
+
+      setContactForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+      setContactStatus("idle");
+      setContactError("");
+      setIsContactOpen(false);
+      setShowContactSuccess(true);
+    } catch (error) {
+      setContactError(error.message || t.contact.error);
+      setContactStatus("error");
+    }
   };
 
   return (
@@ -315,13 +456,32 @@ export default function App() {
         <aside className="profile-sidebar w-full max-w-full p-4 flex-shrink-0 z-20">
           <div className="h-full w-full max-w-full overflow-hidden bg-[#111111]/95 rounded-[2rem] border border-neutral-800 p-5 lg:p-6 xl:p-7 flex flex-col shadow-2xl backdrop-blur-sm">
             {/* Espacio para Foto */}
-            <div className="profile-photo-frame w-full aspect-[16/10] lg:aspect-auto lg:h-[38%] lg:min-h-[220px] shrink-0 bg-gradient-to-b from-neutral-900 to-[#111111] rounded-2xl mb-5 lg:mb-6 relative overflow-hidden flex flex-col items-center justify-center border border-neutral-700/50">
-              <img
-                src="/profile.png"
-                alt="Foto de perfil"
-                className="h-full w-full object-cover"
-              />
-            </div>
+            <button
+              type="button"
+              onClick={() => setIsProfileFlipped((isFlipped) => !isFlipped)}
+              className={`profile-photo-frame w-full aspect-[16/10] lg:aspect-auto lg:h-[38%] lg:min-h-[220px] shrink-0 bg-gradient-to-b from-neutral-900 to-[#111111] rounded-2xl mb-5 lg:mb-6 relative overflow-hidden border border-neutral-700/50 ${
+                isProfileFlipped ? "is-flipped" : ""
+              }`}
+              aria-label="Cambiar foto de perfil"
+              aria-pressed={isProfileFlipped}
+            >
+              <span className="profile-photo-flip">
+                <span className="profile-photo-face">
+                  <img
+                    src="/profile.png"
+                    alt="Foto de perfil principal"
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+                <span className="profile-photo-face profile-photo-face--back">
+                  <img
+                    src="/Profile2.png"
+                    alt="Foto de perfil alternativa"
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+              </span>
+            </button>
 
             {/* Información Personal */}
             <div className="min-w-0 flex-1 flex flex-col">
@@ -337,7 +497,9 @@ export default function App() {
                   <div className="p-2 bg-neutral-800/50 rounded-lg">
                     <MapPin className="w-4 h-4 text-neutral-200" />
                   </div>
-                  <span className="min-w-0 text-sm font-medium break-words">{t.location}</span>
+                  <span className="min-w-0 text-sm font-medium break-words">
+                    {t.location}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -352,13 +514,28 @@ export default function App() {
                     Enviar correo
                   </span>
                 </button>
+                <button
+                  type="button"
+                  onClick={openContactModal}
+                  className="group flex max-w-full items-center gap-3 text-neutral-300 transition-colors"
+                  aria-label={t.contact.button}
+                >
+                  <span className="p-2 bg-neutral-800/50 rounded-lg group-hover:bg-[#9D9DCC]/15 transition-colors">
+                    <MessageSquare className="w-4 h-4 text-neutral-200" />
+                  </span>
+                  <span className="min-w-0 text-sm font-medium text-neutral-400 group-hover:text-[#9D9DCC] transition-colors break-words">
+                    {t.contact.button}
+                  </span>
+                </button>
               </div>
 
               {/* Botones Redes y CV */}
               <div className="mt-auto pt-2 flex flex-col gap-3">
                 <div className="flex gap-3">
                   <a
-                    href="#"
+                    href="https://github.com/MalasTripas123?tab=repositories"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-3 bg-neutral-800/50 hover:bg-[#9D9DCC]/15 rounded-xl transition-all hover:scale-[1.02] active:scale-95 text-white hover:text-[#9D9DCC] flex-1 flex justify-center items-center border border-neutral-700/50 hover:border-[#9D9DCC]/70"
                   >
                     <Github className="w-5 h-5" />
@@ -424,10 +601,14 @@ export default function App() {
                 onClick={toggleTheme}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-700/50 bg-neutral-800/40 text-white transition-colors hover:border-[#9D9DCC]/70 hover:bg-[#9D9DCC]/15 hover:text-[#9D9DCC]"
                 aria-label={
-                  theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"
+                  theme === "dark"
+                    ? "Cambiar a tema claro"
+                    : "Cambiar a tema oscuro"
                 }
                 title={
-                  theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"
+                  theme === "dark"
+                    ? "Cambiar a tema claro"
+                    : "Cambiar a tema oscuro"
                 }
               >
                 {theme === "dark" ? (
@@ -553,6 +734,157 @@ export default function App() {
           </div>
         </main>
       </div>
+
+      {isContactOpen && (
+        <div
+          className="contact-modal fixed inset-0 z-[90] flex items-center justify-center px-4 py-6"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeContactModal();
+            }
+          }}
+        >
+          <form
+            className="contact-modal__panel max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-[1.75rem] p-5 shadow-2xl sm:p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
+            onSubmit={sendContactMessage}
+          >
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <h3
+                id="contact-modal-title"
+                className="text-2xl font-bold text-white"
+              >
+                {t.contact.title}
+              </h3>
+              <button
+                type="button"
+                onClick={closeContactModal}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-700/50 bg-neutral-800/60 text-neutral-300 transition-colors hover:border-[#9D9DCC]/70 hover:bg-[#9D9DCC]/15 hover:text-[#9D9DCC]"
+                aria-label={t.contact.cancel}
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <label className="block">
+                <span className="mb-2 block text-sm font-bold text-neutral-300">
+                  {t.contact.name}
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  value={contactForm.name}
+                  onChange={updateContactField}
+                  className="contact-modal__input"
+                  autoComplete="name"
+                  required
+                />
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-sm font-bold text-neutral-300">
+                  {t.contact.email}
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  value={contactForm.email}
+                  onChange={updateContactField}
+                  className="contact-modal__input"
+                  autoComplete="email"
+                  required
+                />
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-sm font-bold text-neutral-300">
+                  {t.contact.message}
+                </span>
+                <textarea
+                  name="message"
+                  value={contactForm.message}
+                  onChange={updateContactField}
+                  className="contact-modal__input contact-modal__textarea"
+                  rows="6"
+                  required
+                />
+              </label>
+            </div>
+
+            {contactStatus === "error" && (
+              <p
+                className="contact-modal__feedback is-error"
+                aria-live="polite"
+              >
+                {contactError || t.contact.error}
+              </p>
+            )}
+
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={closeContactModal}
+                className="rounded-xl border border-neutral-700/50 px-5 py-3 text-sm font-bold text-neutral-300 transition-colors hover:border-[#9D9DCC]/70 hover:bg-[#9D9DCC]/10 hover:text-[#9D9DCC]"
+              >
+                {t.contact.cancel}
+              </button>
+              <button
+                type="submit"
+                disabled={contactStatus === "sending"}
+                className="flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-black shadow-lg shadow-white/5 transition-all hover:bg-[#9D9DCC] hover:shadow-[#9D9DCC]/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                <Send className="h-4 w-4" />
+                {contactStatus === "sending"
+                  ? t.contact.sending
+                  : t.contact.send}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {showContactSuccess && (
+        <div
+          className="contact-modal fixed inset-0 z-[90] flex items-center justify-center px-4 py-6"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeContactSuccess();
+            }
+          }}
+        >
+          <div
+            className="contact-modal__panel contact-success__panel w-full max-w-md rounded-[1.75rem] p-6 text-center shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-success-title"
+          >
+            <div className="contact-success__icon mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl">
+              <Sparkles className="h-7 w-7" />
+            </div>
+            <h3
+              id="contact-success-title"
+              className="mb-3 text-2xl font-bold text-white"
+            >
+              {t.contact.successTitle}
+            </h3>
+            <p className="mx-auto mb-6 max-w-sm text-sm leading-relaxed text-neutral-400">
+              {t.contact.successText}
+            </p>
+            <button
+              type="button"
+              onClick={closeContactSuccess}
+              className="w-full rounded-xl bg-white px-5 py-3 text-sm font-bold text-black shadow-lg shadow-white/5 transition-all hover:bg-[#9D9DCC] hover:shadow-[#9D9DCC]/20 active:scale-95 sm:w-auto"
+            >
+              {t.contact.successClose}
+            </button>
+          </div>
+        </div>
+      )}
 
       <nav className="section-rail" aria-label="Navegación por secciones">
         {sectionKeys.map((key) => {

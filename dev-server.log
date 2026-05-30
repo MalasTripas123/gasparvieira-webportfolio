@@ -1,0 +1,24 @@
+
+> dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  [32m[1mVITE[22m v7.3.3[39m  [2mready in [0m[1m1199[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m6:27:20 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m7:42:51 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m7:43:01 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m7:43:22 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m7:43:31 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m7:44:30 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m7:44:46 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m8:22:27 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m8:22:31 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m8:22:45 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m8:22:48 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m8:23:02 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/index.jsx, /src/index.css[22m
+[2m8:23:11 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m8:24:30 p. m.[22m [36m[1m[vite][22m[39m [32mvite.config.js changed, restarting server...[39m
+[2m8:24:30 p. m.[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+[2m8:24:30 p. m.[22m [36m[1m[vite][22m[39m server restarted.
