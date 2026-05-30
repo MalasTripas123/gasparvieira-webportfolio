@@ -30,8 +30,7 @@ const dict = {
     aboutTitle: "Sobre mí",
     aboutText: `Soy desarrollador con formación en informática y una trayectoria creativa que ha marcado profundamente mi forma de construir soluciones digitales. Mi primer acercamiento profesional al desarrollo comenzó estudiando Analista Programador Computacional, etapa en la que trabajé con tecnologías como Python, Java, C#, PHP, bases de datos y desarrollo web. Después de algunos años explorando el mundo de la ilustración y el tatuaje, retomé la programación con una mirada más completa, combinando lógica, diseño y sensibilidad visual.
 Actualmente estudio Técnico en Informática de forma online, donde he reforzado mis bases y actualizado mis conocimientos en desarrollo de software. Me interesa especialmente el desarrollo frontend, el diseño web y la creación de experiencias de usuario fluidas, atractivas y funcionales. Mi objetivo es seguir creciendo hacia un perfil full stack, construyendo aplicaciones completas, bien estructuradas y pensadas tanto desde la técnica como desde la experiencia de quienes las usan.
-Me motiva aprender nuevas tecnologías, enfrentar desafíos que exijan pensar con profundidad y encontrar soluciones creativas a problemas reales. Disfruto el proceso de analizar problemas, desarrollar soluciones y mejorar continuamente mis habilidades técnicas.
-`,
+Me motiva aprender nuevas tecnologías, enfrentar desafíos que exijan pensar con profundidad y encontrar soluciones creativas a problemas reales. Disfruto el proceso de analizar problemas, desarrollar soluciones y mejorar continuamente mis habilidades técnicas.`,
     stackTitle: "Stack Tecnológico",
     frontend: "Frontend",
     backend: "Backend",
@@ -65,8 +64,7 @@ Me motiva aprender nuevas tecnologías, enfrentar desafíos que exijan pensar co
     aboutTitle: "About me",
     aboutText: `I am a developer with a background in computer science and a creative path that has deeply shaped the way I build digital solutions. My first professional approach to software development began while studying Computer Programming Analysis, where I worked with technologies such as Python, Java, C#, PHP, databases, and web development. After spending several years exploring illustration and tattooing, I returned to programming with a broader perspective, combining logic, design, and visual sensitivity.
 I am currently studying Information Technology online, strengthening my foundations and updating my knowledge in software development. I am especially interested in frontend development, web design, and the creation of user experiences that feel smooth, engaging, and functional. My goal is to keep growing toward a full-stack profile, building complete, well-structured applications designed with both technical quality and the user experience in mind.
-I am motivated by learning new technologies, taking on challenges that require thoughtful problem-solving, and finding creative solutions to real-world problems. I enjoy the process of analyzing problems, developing solutions, and continuously improving my technical skills.
-`,
+I am motivated by learning new technologies, taking on challenges that require thoughtful problem-solving, and finding creative solutions to real-world problems. I enjoy the process of analyzing problems, developing solutions, and continuously improving my technical skills.`,
     stackTitle: "Tech Stack",
     frontend: "Frontend",
     backend: "Backend",
@@ -173,21 +171,59 @@ const techIconClasses = {
 const projectsData = [
   {
     id: 1,
-    title: "E-commerce API REST",
+    title: "TCG-Tournament",
+    subtitleES: "Gestor de torneos para Juegos de Cartas",
+    subtitleEN: "Card game tournament manager",
     descES:
-      "API completa para comercio electrónico. Incluye sistema de autenticación de usuarios, gestión de inventario de productos y un módulo de procesamiento de pagos simulado.",
+      `Una plataforma integral estructurada como Software as a Service (SaaS) diseñada para la gestión logística de torneos de juegos de cartas coleccionables (TCG). El producto se desarrolló para comercializarse mediante un modelo de suscripción mensual, con una arquitectura escalable pensada para soportar una fase beta de implementación en aproximadamente 200 tiendas locales. La herramienta automatiza la carga administrativa de los organizadores y mejora la experiencia competitiva de los jugadores.`,
     descEN:
-      "Complete e-commerce API. Includes user authentication system, product inventory management, and a simulated payment processing module.",
-    tech: ["Node.js", "MongoDB", "Express"],
+      `A comprehensive platform structured as a Software as a Service (SaaS), designed for the logistical management of Trading Card Game (TCG) tournaments. The product was developed for commercialization through a monthly subscription model, featuring a scalable architecture designed to support a beta rollout phase across approximately 200 local stores. The tool automates the administrative workload for organizers and enhances the competitive experience for players.`,
+    tech: ["Node.js", "Express", "MongoDB"],
+    link: "https://github.com/MalasTripas123/TCG-tournament",
+    linkDeployed: "https://tcg-tour.onrender.com/",
+    image: "/tcg-tournament-preview.png",
   },
   {
     id: 2,
-    title: "Gestor de Tareas de Escritorio",
+    title: "Xploración",
+    subtitleES: "Juego de fiesta web",
+    subtitleEN: "Party web game",
     descES:
-      "Aplicación de escritorio enfocada en la productividad. Permite organizar tareas diarias utilizando almacenamiento local eficiente para acceso sin conexión.",
+      `Xploración es un juego de cartas web multijugador diseñado para partidas casuales y grupos. El proyecto traduce mecánicas tácticas y la interacción social de los juegos de mesa físicos a un entorno digital fluido. Los jugadores se sumergen en una carrera competitiva buscando tesoros, enfrentándose y gestionando recursos mediante un sistema de turnos sincronizado al instante.`,
     descEN:
-      "Desktop application focused on productivity. Allows organizing daily tasks using efficient local storage for offline access.",
+      `Xploración is a multiplayer web-based card game designed for casual play and groups. The project translates the tactical mechanics and social interaction of physical board games into a seamless digital environment. Players immerse themselves in a competitive race to find treasures, battle opponents, and manage resources through an instantly synchronized turn-based system.`,
+    tech: ["Node.js", "Express", "MongoDB", "Tailwind CSS", "Web Sockets"],
+    link: "https://github.com/MalasTripas123/xploracion-web-game",
+    linkDeployed: "https://xploracion-web-game.onrender.com/",
+    image: "/xploracion-preview.png",
+  },
+  {
+    id: 3,
+    title: "Flotante",
+    subtitleES: "Aplicación de escritorio de productividad",
+    subtitleEN: "Desktop productivity app",
+    descES:
+      `"Flotante" es una aplicación de escritorio utilitaria diseñada para optimizar el flujo de trabajo de los usuarios mediante el acceso rápido a fragmentos de texto (snippets) e imágenes de referencia. Funciona como un widget dinámico que maximiza el espacio en pantalla: se contrae en un icono discreto en los bordes del monitor y se expande automáticamente al interactuar con el mouse. Está pensada para desarrolladores, diseñadores o cualquier usuario que requiera gestionar información recurrente y referencias visuales sin interrumpir su contexto de trabajo.`,
+    descEN:
+      `"Flotante" is a utility desktop application designed to optimize users' workflow by providing quick access to text snippets and reference images. It functions as a dynamic widget that maximizes screen real estate: it collapses into a discreet icon on the edge of the monitor and automatically expands upon mouse interaction. It is built for developers, designers, or any user who needs to manage recurring information and visual references without interrupting their work context.`,
     tech: ["C#", "Windows Forms", "SQLite"],
+    link: "https://github.com/MalasTripas123/flotante",
+    linkDeployed: "",
+    image: "/flotante-preview.png",
+  },
+  {
+    id: 4,
+    title: "Artifact Minmaxing",
+    subtitleES: "Herramienta de minmaxing para Genshin Impact",
+    subtitleEN: "Minmaxing tool for Genshin Impact",
+    descES:
+      `Una herramienta web avanzada diseñada para analizar y optimizar el equipamiento en Genshin Impact. La aplicación permite a los jugadores ingresar su UID para extraer datos en tiempo real mediante la API de Enka.Network. Su motor lógico evalúa los artefactos actuales de cada personaje, calcula su eficiencia en base a diferentes builds predeterminadas y proyecta el margen de mejora matemática posible (min-maxing). Es la herramienta ideal para descubrir qué tanto potencial oculto tienen los personajes.`,
+    descEN:
+      `An advanced web tool designed to analyze and optimize equipment in Genshin Impact. The application allows players to input their UID to fetch real-time data using the Enka.Network API. Its logic engine evaluates each character's current artifacts, calculates their efficiency based on various preset builds, and projects the mathematical margin for potential improvement (min-maxing). It is the ideal tool for discovering the hidden potential of any given character`,
+    tech: ["Node.js", "Express", "JavaScript"],
+    link: "https://github.com/MalasTripas123/artifact-minmaxing-frontend",
+    linkDeployed: "https://artifact-minmaxing.vercel.app/",
+    image: "/artifact-minmaxing-preview.png",
   },
 ];
 
@@ -710,7 +746,12 @@ export default function App() {
                   >
                     <div className="w-full md:w-2/5 aspect-video bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-700 relative">
                       <div className="absolute inset-0 bg-gradient-to-tr from-neutral-800 to-neutral-700 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
-                        <Code2 className="w-12 h-12 text-neutral-500 opacity-50 group-hover:text-[#9D9DCC] transition-colors" />
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* <Code2 className="w-12 h-12 text-neutral-500 opacity-50 group-hover:text-[#9D9DCC] transition-colors" /> */}
                       </div>
                     </div>
 
@@ -718,6 +759,9 @@ export default function App() {
                       <h4 className="text-2xl font-bold text-white mb-4 group-hover:text-[#9D9DCC] transition-colors">
                         {project.title}
                       </h4>
+                      <h5 className="text-sm font-bold text-neutral-400 uppercase tracking-wide mb-3">
+                        {lang === "es" ? project.subtitleES : project.subtitleEN}
+                      </h5>
                       <p className="text-neutral-400 mb-6 leading-relaxed flex-1">
                         {lang === "es" ? project.descES : project.descEN}
                       </p>
@@ -731,7 +775,8 @@ export default function App() {
                           </span>
                         ))}
                       </div>
-                      <button className="self-start flex items-center gap-2 px-6 py-3 bg-neutral-800 hover:bg-[#9D9DCC] hover:text-black rounded-xl text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_rgba(157,157,204,0.18)]">
+                      <button className="self-start flex items-center gap-2 px-6 py-3 bg-neutral-800 hover:bg-[#9D9DCC] hover:text-black rounded-xl text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_rgba(157,157,204,0.18)]"
+                      onClick={() => window.open(project.link, "_blank")}>
                         {t.viewCode} <ChevronRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -833,13 +878,13 @@ export default function App() {
             )}
 
             <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-              <button
+              {/* <button
                 type="button"
                 onClick={closeContactModal}
                 className="rounded-xl border border-neutral-700/50 px-5 py-3 text-sm font-bold text-neutral-300 transition-colors hover:border-[#9D9DCC]/70 hover:bg-[#9D9DCC]/10 hover:text-[#9D9DCC]"
               >
                 {t.contact.cancel}
-              </button>
+              </button> */}
               <button
                 type="submit"
                 disabled={contactStatus === "sending"}
