@@ -468,14 +468,14 @@ export default function App() {
               <span className="profile-photo-flip">
                 <span className="profile-photo-face">
                   <img
-                    src="/profile.png"
+                    src="/profile1.png"
                     alt="Foto de perfil principal"
                     className="h-full w-full object-cover"
                   />
                 </span>
                 <span className="profile-photo-face profile-photo-face--back">
                   <img
-                    src="/Profile2.png"
+                    src="/profile2.png"
                     alt="Foto de perfil alternativa"
                     className="h-full w-full object-cover"
                   />
@@ -541,7 +541,9 @@ export default function App() {
                     <Github className="w-5 h-5" />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.linkedin.com/in/gaspar-vieira-bert-62675637b/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-3 bg-neutral-800/50 hover:bg-[#9D9DCC]/15 rounded-xl transition-all hover:scale-[1.02] active:scale-95 text-white hover:text-[#9D9DCC] flex-1 flex justify-center items-center border border-neutral-700/50 hover:border-[#9D9DCC]/70"
                   >
                     <Linkedin className="w-5 h-5" />
