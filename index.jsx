@@ -7,8 +7,9 @@ import {
   Mail,
   MessageSquare,
   ChevronRight,
-  Code2,
   Database,
+  ExternalLink,
+  BookOpen,
   Wrench,
   Globe,
   Home,
@@ -20,6 +21,7 @@ import {
   LayoutTemplate,
   Server,
 } from "lucide-react";
+import { projectDetailsById } from "./src/projects/index.jsx";
 
 const dict = {
   es: {
@@ -38,6 +40,12 @@ Me motiva aprender nuevas tecnologías, enfrentar desafíos que exijan pensar co
     tools: "Herramientas",
     projectsTitle: "Proyectos",
     viewCode: "Ver Código",
+    visitRepo: "Visitar repo",
+    viewMore: "Ver más",
+    visitPage: "Visitar página",
+    directDownload: "Descarga directa",
+    projectDetails: "Detalle del proyecto",
+    close: "Cerrar",
     photoPlaceholder: "ESPACIO PARA FOTO",
     contact: {
       button: "Contáctame",
@@ -72,6 +80,12 @@ I am motivated by learning new technologies, taking on challenges that require t
     tools: "Tools",
     projectsTitle: "Projects",
     viewCode: "View Code",
+    visitRepo: "Visit repo",
+    viewMore: "View more",
+    visitPage: "Visit page",
+    directDownload: "Direct download",
+    projectDetails: "Project details",
+    close: "Close",
     photoPlaceholder: "PHOTO SPACE",
     contact: {
       button: "Contact me",
@@ -181,6 +195,7 @@ const projectsData = [
     tech: ["Node.js", "Express", "MongoDB"],
     link: "https://github.com/MalasTripas123/TCG-tournament",
     linkDeployed: "https://tcg-tour.onrender.com/",
+    linkDirectDownload: "",
     image: "/tcg-tournament-preview.png",
   },
   {
@@ -192,9 +207,10 @@ const projectsData = [
       `Xploración es un juego de cartas web multijugador diseñado para partidas casuales y grupos. El proyecto traduce mecánicas tácticas y la interacción social de los juegos de mesa físicos a un entorno digital fluido. Los jugadores se sumergen en una carrera competitiva buscando tesoros, enfrentándose y gestionando recursos mediante un sistema de turnos sincronizado al instante.`,
     descEN:
       `Xploración is a multiplayer web-based card game designed for casual play and groups. The project translates the tactical mechanics and social interaction of physical board games into a seamless digital environment. Players immerse themselves in a competitive race to find treasures, battle opponents, and manage resources through an instantly synchronized turn-based system.`,
-    tech: ["Node.js", "Express", "MongoDB", "Tailwind CSS", "Web Sockets"],
+    tech: ["Node.js", "Express", "MongoDB", "Tailwind CSS"],
     link: "https://github.com/MalasTripas123/xploracion-web-game",
     linkDeployed: "https://xploracion-web-game.onrender.com/",
+    linkDirectDownload: "",
     image: "/xploracion-preview.png",
   },
   {
@@ -209,6 +225,7 @@ const projectsData = [
     tech: ["C#", "Windows Forms", "SQLite"],
     link: "https://github.com/MalasTripas123/flotante",
     linkDeployed: "",
+    linkDirectDownload: "https://github.com/MalasTripas123/flotante/releases/download/v1.0.0/Flotante.v1.0.0.zip",
     image: "/flotante-preview.png",
   },
   {
@@ -223,6 +240,7 @@ const projectsData = [
     tech: ["Node.js", "Express", "JavaScript"],
     link: "https://github.com/MalasTripas123/artifact-minmaxing-frontend",
     linkDeployed: "https://artifact-minmaxing.vercel.app/",
+    linkDirectDownload: "",
     image: "/artifact-minmaxing-preview.png",
   },
 ];
@@ -327,6 +345,7 @@ export default function App() {
   const [isProfileFlipped, setIsProfileFlipped] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [showContactSuccess, setShowContactSuccess] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [contactForm, setContactForm] = useState({
     name: "",
     email: "",
@@ -348,18 +367,19 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    if (!isContactOpen && !showContactSuccess) return undefined;
+    if (!isContactOpen && !showContactSuccess && !selectedProject) return undefined;
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setIsContactOpen(false);
         setShowContactSuccess(false);
+        setSelectedProject(null);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isContactOpen, showContactSuccess]);
+  }, [isContactOpen, showContactSuccess, selectedProject]);
 
   // Manejar el scroll para actualizar el menú activo
   useEffect(() => {
@@ -487,6 +507,48 @@ export default function App() {
       setContactStatus("error");
     }
   };
+
+  const openExternalLink = (url) => {
+    if (!url) return;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const getProjectText = (project, field) =>
+    lang === "es" ? project[`${field}ES`] : project[`${field}EN`];
+
+  const getProjectSummary = (project) =>
+    getProjectText(project, "summary") || getProjectText(project, "desc");
+
+  const getProjectActions = (project) => [
+    project.link
+      ? {
+          key: "repo",
+          label: t.visitRepo || t.viewCode,
+          url: project.link,
+          icon: <Github className="w-4 h-4" />,
+        }
+      : null,
+    project.linkDeployed
+      ? {
+          key: "deployed",
+          label: t.visitPage,
+          url: project.linkDeployed,
+          icon: <ExternalLink className="w-4 h-4" />,
+        }
+      : null,
+    project.linkDirectDownload
+      ? {
+          key: "download",
+          label: t.directDownload,
+          url: project.linkDirectDownload,
+          icon: <Download className="w-4 h-4" />,
+        }
+      : null,
+  ].filter(Boolean);
+
+  const SelectedProjectDetail = selectedProject
+    ? projectDetailsById[selectedProject.id]
+    : null;
 
   return (
     <div className="portfolio-root relative isolate min-h-screen bg-[#050505] text-neutral-300 font-sans selection:bg-neutral-200 selection:text-black">
@@ -760,10 +822,10 @@ export default function App() {
                         {project.title}
                       </h4>
                       <h5 className="text-sm font-bold text-neutral-400 uppercase tracking-wide mb-3">
-                        {lang === "es" ? project.subtitleES : project.subtitleEN}
+                        {getProjectText(project, "subtitle")}
                       </h5>
-                      <p className="text-neutral-400 mb-6 leading-relaxed flex-1">
-                        {lang === "es" ? project.descES : project.descEN}
+                      <p className="project-card-summary text-neutral-400 mb-6 leading-relaxed flex-1">
+                        {getProjectSummary(project)}
                       </p>
                       <div className="flex flex-wrap gap-2 mb-8">
                         {project.tech.map((tech) => (
@@ -775,10 +837,27 @@ export default function App() {
                           </span>
                         ))}
                       </div>
-                      <button className="self-start flex items-center gap-2 px-6 py-3 bg-neutral-800 hover:bg-[#9D9DCC] hover:text-black rounded-xl text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_rgba(157,157,204,0.18)]"
-                      onClick={() => window.open(project.link, "_blank")}>
-                        {t.viewCode} <ChevronRight className="w-4 h-4" />
-                      </button>
+                      <div className="flex flex-wrap gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedProject(project)}
+                          className="flex items-center gap-2 px-5 py-3 bg-white text-black hover:bg-[#9D9DCC] rounded-xl text-sm font-bold transition-all hover:shadow-[0_0_24px_rgba(157,157,204,0.18)] active:scale-95"
+                        >
+                          <BookOpen className="w-4 h-4" />
+                          {t.viewMore}
+                        </button>
+                        {getProjectActions(project).map((action) => (
+                          <button
+                            key={action.key}
+                            type="button"
+                            onClick={() => openExternalLink(action.url)}
+                            className="flex items-center gap-2 px-5 py-3 bg-neutral-800 hover:bg-[#9D9DCC] hover:text-black rounded-xl text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_rgba(157,157,204,0.18)] active:scale-95"
+                          >
+                            {action.icon}
+                            {action.label}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -787,6 +866,94 @@ export default function App() {
           </div>
         </main>
       </div>
+
+      {selectedProject && (
+        <div
+          className="project-modal fixed inset-0 z-[90] flex items-center justify-center px-4 py-6"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setSelectedProject(null);
+            }
+          }}
+        >
+          <article
+            className="project-modal__panel max-h-[88vh] w-full max-w-5xl overflow-y-auto rounded-[1.75rem] p-5 shadow-2xl sm:p-6 lg:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+          >
+            <div className="mb-6 flex items-start justify-between gap-4">
+              <div>
+                <span className="mb-2 block text-xs font-bold uppercase tracking-[0.22em] text-[#9D9DCC]">
+                  {t.projectDetails}
+                </span>
+                <h3
+                  id="project-modal-title"
+                  className="text-3xl font-bold text-white"
+                >
+                  {selectedProject.title}
+                </h3>
+                <p className="mt-2 text-sm font-bold uppercase tracking-wide text-neutral-400">
+                  {getProjectText(selectedProject, "subtitle")}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedProject(null)}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-700/50 bg-neutral-800/60 text-neutral-300 transition-colors hover:border-[#9D9DCC]/70 hover:bg-[#9D9DCC]/15 hover:text-[#9D9DCC]"
+                aria-label={t.close}
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="project-modal__hero mb-6 overflow-hidden rounded-2xl border border-neutral-700/60 bg-neutral-900">
+              <img
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <div className="mb-7 flex flex-wrap gap-2">
+              {selectedProject.tech.map((tech) => (
+                <span
+                  key={tech}
+                  className="text-xs font-bold px-3 py-1.5 bg-neutral-800 text-neutral-300 rounded-lg"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <div className="mb-8 flex flex-wrap gap-3">
+              {getProjectActions(selectedProject).map((action) => (
+                <button
+                  key={action.key}
+                  type="button"
+                  onClick={() => openExternalLink(action.url)}
+                  className="flex items-center gap-2 px-5 py-3 bg-neutral-800 hover:bg-[#9D9DCC] hover:text-black rounded-xl text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_rgba(157,157,204,0.18)] active:scale-95"
+                >
+                  {action.icon}
+                  {action.label}
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              ))}
+            </div>
+
+            <div className="project-detail-content">
+              {SelectedProjectDetail ? (
+                <SelectedProjectDetail lang={lang} project={selectedProject} />
+              ) : (
+                <p className="text-neutral-400">
+                  {getProjectText(selectedProject, "desc")}
+                </p>
+              )}
+            </div>
+          </article>
+        </div>
+      )}
 
       {isContactOpen && (
         <div

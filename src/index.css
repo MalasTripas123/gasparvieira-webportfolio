@@ -143,6 +143,104 @@ html[data-theme="light"]::-webkit-scrollbar-thumb {
   position: relative;
 }
 
+.project-modal {
+  background: rgba(5, 5, 5, 0.74);
+  backdrop-filter: blur(16px);
+}
+
+.project-card-summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.project-modal__panel {
+  background: rgba(17, 17, 17, 0.97);
+  border: 1px solid rgba(157, 157, 204, 0.34);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.5),
+    0 0 44px rgba(157, 157, 204, 0.12);
+}
+
+.project-modal__hero {
+  aspect-ratio: 16 / 8;
+}
+
+.project-detail-content {
+  color: #a3a3a3;
+}
+
+.project-detail-flow {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.project-detail-section h4 {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+}
+
+.project-detail-section p,
+.project-readme p {
+  line-height: 1.75;
+  margin: 0;
+}
+
+.project-detail-list {
+  display: grid;
+  gap: 0.65rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project-detail-list li {
+  border-left: 3px solid rgba(157, 157, 204, 0.75);
+  line-height: 1.6;
+  padding-left: 0.9rem;
+}
+
+.project-media-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.project-media-item {
+  border: 1px solid rgba(115, 115, 115, 0.45);
+  border-radius: 1rem;
+  margin: 0;
+  overflow: hidden;
+}
+
+.project-media-item img {
+  aspect-ratio: 16 / 9;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.project-media-item figcaption,
+.project-readme {
+  background: rgba(5, 5, 5, 0.34);
+}
+
+.project-media-item figcaption {
+  color: #a3a3a3;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  padding: 0.85rem 1rem;
+}
+
+.project-readme {
+  border: 1px solid rgba(115, 115, 115, 0.38);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
 html[data-theme="light"] .contact-modal {
   background: rgba(246, 244, 251, 0.68);
 }
@@ -174,6 +272,37 @@ html[data-theme="light"] .contact-modal__feedback.is-error {
 html[data-theme="light"] .contact-success__icon {
   background: rgba(157, 157, 204, 0.2);
   color: #57547e;
+}
+
+html[data-theme="light"] .project-modal {
+  background: rgba(246, 244, 251, 0.7);
+}
+
+html[data-theme="light"] .project-modal__panel {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: rgba(157, 157, 204, 0.34);
+  box-shadow:
+    0 28px 90px rgba(42, 39, 58, 0.18),
+    0 0 44px rgba(157, 157, 204, 0.14);
+}
+
+html[data-theme="light"] .project-detail-content,
+html[data-theme="light"] .project-media-item figcaption {
+  color: #5f5c72;
+}
+
+html[data-theme="light"] .project-detail-section h4 {
+  color: #1f1d2e;
+}
+
+html[data-theme="light"] .project-media-item,
+html[data-theme="light"] .project-readme {
+  border-color: rgba(157, 157, 204, 0.3);
+}
+
+html[data-theme="light"] .project-media-item figcaption,
+html[data-theme="light"] .project-readme {
+  background: rgba(247, 245, 252, 0.92);
 }
 
 .section-rail {
