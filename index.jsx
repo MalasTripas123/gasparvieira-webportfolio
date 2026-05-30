@@ -28,8 +28,10 @@ const dict = {
     location: "Santiago, Chile",
     cv: "Descargar CV",
     aboutTitle: "Sobre mí",
-    aboutText:
-      "Desarrollador junior con experiencia en proyectos personales en Python, JavaScript y C#. Interesado en desarrollo web/backend. He construido aplicaciones completas con bases de datos y APIs REST.",
+    aboutText: `Soy desarrollador con formación en informática y una trayectoria creativa que ha marcado profundamente mi forma de construir soluciones digitales. Mi primer acercamiento profesional al desarrollo comenzó estudiando Analista Programador Computacional, etapa en la que trabajé con tecnologías como Python, Java, C#, PHP, bases de datos y desarrollo web. Después de algunos años explorando el mundo de la ilustración y el tatuaje, retomé la programación con una mirada más completa, combinando lógica, diseño y sensibilidad visual.
+Actualmente estudio Técnico en Informática de forma online, donde he reforzado mis bases y actualizado mis conocimientos en desarrollo de software. Me interesa especialmente el desarrollo frontend, el diseño web y la creación de experiencias de usuario fluidas, atractivas y funcionales. Mi objetivo es seguir creciendo hacia un perfil full stack, construyendo aplicaciones completas, bien estructuradas y pensadas tanto desde la técnica como desde la experiencia de quienes las usan.
+Me motiva aprender nuevas tecnologías, enfrentar desafíos que exijan pensar con profundidad y encontrar soluciones creativas a problemas reales. Disfruto el proceso de analizar problemas, desarrollar soluciones y mejorar continuamente mis habilidades técnicas.
+`,
     stackTitle: "Stack Tecnológico",
     frontend: "Frontend",
     backend: "Backend",
@@ -61,8 +63,10 @@ const dict = {
     location: "Santiago, Chile",
     cv: "Download CV",
     aboutTitle: "About me",
-    aboutText:
-      "Junior developer with experience in personal projects using Python, JavaScript, and C#. Interested in web/backend development. I have built full-stack applications with databases and REST APIs.",
+    aboutText: `I am a developer with a background in computer science and a creative path that has deeply shaped the way I build digital solutions. My first professional approach to software development began while studying Computer Programming Analysis, where I worked with technologies such as Python, Java, C#, PHP, databases, and web development. After spending several years exploring illustration and tattooing, I returned to programming with a broader perspective, combining logic, design, and visual sensitivity.
+I am currently studying Information Technology online, strengthening my foundations and updating my knowledge in software development. I am especially interested in frontend development, web design, and the creation of user experiences that feel smooth, engaging, and functional. My goal is to keep growing toward a full-stack profile, building complete, well-structured applications designed with both technical quality and the user experience in mind.
+I am motivated by learning new technologies, taking on challenges that require thoughtful problem-solving, and finding creative solutions to real-world problems. I enjoy the process of analyzing problems, developing solutions, and continuously improving my technical skills.
+`,
     stackTitle: "Tech Stack",
     frontend: "Frontend",
     backend: "Backend",
@@ -549,10 +553,12 @@ export default function App() {
                     <Linkedin className="w-5 h-5" />
                   </a>
                 </div>
-                <button className="w-full py-3 bg-white text-black hover:bg-[#9D9DCC] rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-white/5 hover:shadow-[#9D9DCC]/20">
-                  <Download className="w-4 h-4" />
-                  {t.cv}
-                </button>
+                <a href="/cv-gaspar-vieira.pdf" download="cv-gaspar-vieira.pdf">
+                  <button className="w-full py-3 bg-white text-black hover:bg-[#9D9DCC] rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-white/5 hover:shadow-[#9D9DCC]/20">
+                    <Download className="w-4 h-4" />
+                    {t.cv}
+                  </button>
+                </a>
               </div>
 
               <div className="mt-4 flex items-center justify-center gap-2 text-sm font-medium text-[#9D9DCC] opacity-90">
