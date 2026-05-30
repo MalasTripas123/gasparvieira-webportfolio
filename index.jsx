@@ -207,7 +207,7 @@ const projectsData = [
       `Xploración es un juego de cartas web multijugador diseñado para partidas casuales y grupos. El proyecto traduce mecánicas tácticas y la interacción social de los juegos de mesa físicos a un entorno digital fluido. Los jugadores se sumergen en una carrera competitiva buscando tesoros, enfrentándose y gestionando recursos mediante un sistema de turnos sincronizado al instante.`,
     descEN:
       `Xploración is a multiplayer web-based card game designed for casual play and groups. The project translates the tactical mechanics and social interaction of physical board games into a seamless digital environment. Players immerse themselves in a competitive race to find treasures, battle opponents, and manage resources through an instantly synchronized turn-based system.`,
-    tech: ["Node.js", "Express", "MongoDB", "Tailwind CSS"],
+    tech: ["Node.js", "Express", "MongoDB", "Tailwind CSS", "Web Sockets"],
     link: "https://github.com/MalasTripas123/xploracion-web-game",
     linkDeployed: "https://xploracion-web-game.onrender.com/",
     linkDirectDownload: "",
